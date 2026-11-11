@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Cội Project | Nón Lá 2.0</title>
+  
+  <!-- Nhúng Font Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+
+  <!-- NHÚNG CSS TRỰC TIẾP VÀO ĐÂY -->
+  <style>
+    :root {
+      --cream: #F6F1E7;
+      --sand: #EDE4D0;
+      --forest: #14261F;
+      --forest-deep: #0E1C16;
+      --leaf: #2F5D50;
+      --straw: #E3C58A;
+      --signal: #FF5A2B;
+      --muted: #6B7A73;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Oswald', sans-serif; background: var(--cream); color: var(--forest); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, .logo-text, .wordmark, .step-card h3 { font-family: 'Playfair Display', serif; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+    h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); margin-bottom: 1.5rem; color: var(--forest); }
+    h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1rem; color: var(--forest); }
+    h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+    p { max-width: 65ch; font-size: 1.05rem; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    .text-cream { color: var(--cream); }
+    .text-straw { color: var(--straw); }
+    .label { display: block; font-family: 'Oswald', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--muted); }
+    
+    /* Top Bar */
+    .top-bar { background: #E6E1C5; color: var(--forest); text-align: center; padding: 10px; font-family: 'Oswald', sans-serif; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .top-link { font-weight: 700; text-decoration: underline; margin-left: 10px; }
+    
+    /* Navbar */
+    .navbar { position: sticky; top: 0; background: var(--cream); border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 100; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; }
+    .wordmark { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--forest); }
+    .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #FFA45B, #FF5A2B); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Oswald', sans-serif; font-weight: 800; font-size: 1.3rem; }
+    .logo-text { display: flex; flex-direction: column; font-size: 1.4rem; line-height: 1.1; }
+    .logo-text span { font-family: 'Oswald', sans-serif; font-size: 0.7rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+    .nav-links { display: none; gap: 2.5rem; font-family: 'Oswald', sans-serif; font-weight: 500; color: var(--muted); font-size: 1rem; }
+    .nav-links a { text-decoration: none; color: inherit; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--forest); }
+    .hamburger { display: block; background: none; border: none; cursor: pointer; color: var(--forest); min-width: 44px; min-height: 44px; }
+    .nav-btn { display: none; font-family: 'Oswald', sans-serif; }
+    
+    /* Buttons */
+    .btn-primary, .btn-outline { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.75rem 1.5rem; border-radius: 50px; font-family: 'Oswald', sans-serif; font-weight: 700; transition: transform 0.2s; cursor: pointer; border: 1px solid transparent; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .btn-primary { background: var(--signal); color: var(--forest); }
+    .btn-outline { background: transparent; color: var(--forest); border-color: var(--forest); }
+    .btn-primary:hover, .btn-outline:hover { transform: scale(1.02); }
+    
+    /* Hero */
+    .hero { padding: 4rem 0; background: var(--cream); }
+    .hero-grid { display: grid; gap: 4rem; align-items: center; }
+    .chip { display: inline-block; background: var(--sand); padding: 0.4rem 1rem; border-radius: 50px; font-family: 'Oswald', sans-serif; font-size: 0.8rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--forest); }
+    .hero-actions { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .date-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--sand); padding: 0.5rem 1rem; border-radius: 50px; font-family: 'Oswald', sans-serif; font-size: 0.85rem; font-weight: 500; color: var(--forest); }
+    .hero-image-wrapper { position: relative; width: 100%; display: flex; justify-content: center; }
+    .hero-decor { position: absolute; top: 20px; right: 20px; width: 100%; height: 100%; background: var(--straw); border-radius: 24px; z-index: 0; }
+    .hero-img { width: 100%; height: auto; aspect-ratio: 4/5; border-radius: 24px; position: relative; z-index: 1; display: block; object-fit: cover; object-position: center; }
+    
+    /* Why */
+    .why { background: var(--sand); padding: 5rem 0; }
+    .why-header { display: grid; gap: 2rem; margin-bottom: 3rem; }
+    .why-cards { display: grid; gap: 1.5rem; margin-bottom: 4rem; }
+    .card-dark { background: var(--forest); color: var(--cream); padding: 2.5rem 2rem; border-radius: 20px; display: flex; flex-direction: column; }
+    .card-dark h3 { color: var(--cream); font-size: 1.5rem; }
+    .card-num { font-family: 'Oswald', sans-serif; color: var(--straw); font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; display: block; }
+    .source-link { display: block; margin-top: auto; padding-top: 1.5rem; font-family: 'Oswald', sans-serif; font-size: 0.8rem; color: var(--straw); text-decoration: underline; opacity: 0.8; }
+    .split-block { display: grid; gap: 3rem; background: var(--cream); padding: 3rem; border-radius: 24px; align-items: center; }
+    .split-img img { width: 100%; height: 400px; border-radius: 16px; object-fit: cover; display: block; }
+    .split-text { padding: 1rem; }
+    
+    /* Looks */
+    .looks { background: var(--forest); padding: 6rem 0; }
+    .subline { margin-bottom: 3rem; opacity: 0.9; font-size: 1.2rem; color: var(--cream); font-family: 'Oswald', sans-serif; }
+    .looks-grid { display: grid; gap: 1.5rem; }
+    .look-item { position: relative; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; background-color: var(--forest-deep); }
+    .look-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+    .look-item:hover img { transform: scale(1.03); }
+    .look-item figcaption { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; padding: 1rem; background: rgba(20, 38, 31, 0.9); border-left: 4px solid var(--signal); color: var(--cream); font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.1rem; z-index: 2; border-radius: 8px; backdrop-filter: blur(4px); }
+    .look-large img { aspect-ratio: 4/5; }
+    .look-small img { aspect-ratio: 4/3; }
+    
+    /* How */
+    .how { padding: 6rem 0; background: var(--cream); }
+    .how-grid { display: grid; gap: 1.5rem; margin: 3rem 0; }
+    .step-card { border: 1px solid rgba(0,0,0,0.1); padding: 2.5rem 2rem; border-radius: 20px; background: var(--cream); position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    .step-num { font-family: 'Oswald', sans-serif; display: block; font-size: 5rem; font-weight: 800; color: rgba(20, 38, 31, 0.08); line-height: 1; margin-bottom: 1rem; position: absolute; top: 0.5rem; right: 1rem; }
+    .step-card h3 { position: relative; z-index: 1; color: var(--forest); font-size: 1.6rem; }
+    .step-card p { position: relative; z-index: 1; font-family: 'Oswald', sans-serif; }
+    .deadline-bar { background: var(--forest); color: var(--cream); padding: 1.5rem 2rem; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .deadline-bar span { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.2rem; }
+    
+    /* Craft */
+    .craft { background: var(--leaf); padding: 6rem 0; color: var(--cream); }
+    .craft-grid { display: grid; gap: 3rem; margin: 3rem 0; }
+    .craft-col { border-top: 2px solid var(--straw); padding-top: 2rem; }
+    .craft-col h3 { color: var(--cream); font-size: 1.8rem; }
+    .craft-col p { font-family: 'Oswald', sans-serif; font-size: 1.1rem; line-height: 1.7; opacity: 0.9; }
+    .sources { margin-top: 2rem; }
+    .sources ol { margin-left: 1.2rem; font-family: 'Oswald', sans-serif; font-size: 0.9rem; color: var(--cream); opacity: 0.7; }
+    .sources li { margin-bottom: 0.5rem; }
+    .sources a { text-decoration: underline; }
+    
+    /* Join */
+    .join { background: var(--forest); color: var(--cream); text-align: center; padding: 6rem 0; }
+    .join h2 { margin-bottom: 1rem; color: var(--cream); font-size: 3.5rem; }
+    .join p { margin: 0 auto 2rem; color: var(--cream); font-family: 'Oswald', sans-serif; font-size: 1.2rem; }
+    .btn-large { padding: 1rem 2.5rem; font-size: 1.2rem; }
+    .email-text { margin-top: 2rem; font-family: 'Oswald', sans-serif; font-size: 0.9rem; color: var(--cream); opacity: 0.8; }
+    .email-text a { text-decoration: underline; }
+    
+    /* Footer */
+    .footer { background: var(--forest-deep); color: var(--cream); padding: 4rem 0 2rem; font-family: 'Oswald', sans-serif; }
+    .footer-grid { display: grid; gap: 3rem; margin-bottom: 3rem; }
+    .footer-col { display: flex; flex-direction: column; gap: 0.8rem; font-size: 1rem; }
+    .footer-col a:hover { text-decoration: underline; }
+    .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; font-family: 'Oswald', sans-serif; font-size: 0.85rem; opacity: 0.6; }
+    
+    /* Responsive */
+    @media (max-width: 899px) {
+      .nav-links.is-active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream); padding: 2rem; border-bottom: 1px solid var(--forest); }
+      .nav-btn { display: inline-flex; }
+    }
+    @media (min-width: 768px) {
+      .why-header { grid-template-columns: 1fr 1fr; align-items: center; }
+      .why-cards { grid-template-columns: 1fr 1fr 1fr; }
+      .split-block { grid-template-columns: 1fr 1.2fr; padding: 4rem; }
+      .how-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .craft-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+      .footer-grid { grid-template-columns: 2fr 1fr 1.5fr; }
+    }
+    @media (min-width: 900px) {
+      .hamburger { display: none; }
+      .nav-links, .nav-btn { display: flex; }
+      .hero-grid { grid-template-columns: 55% 45%; gap: 2rem; }
+      .looks-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 20px; }
+      .look-large { grid-row: span 2; height: 100%; }
+      .look-large img { height: 100%; aspect-ratio: auto; }
+      .look-small { height: 100%; }
+      .look-small img { height: 100%; aspect-ratio: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    Deadline 28.11 &nbsp;·&nbsp; #TheCoiProject &nbsp;#CoiDaily &nbsp; <a href="#how" class="top-link">Đăng ký ngay &rarr;</a>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="wordmark">
+        <div class="logo-icon">C</div>
+        <div class="logo-text">The Cội Project <span>NÓN LÁ 2.0</span></div>
+      </a>
+      
+      <button class="hamburger" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+
+      <nav class="nav-links">
+        <a href="#why">Why</a>
+        <a href="#looks">Looks</a>
+        <a href="#how">How to join</a>
+        <a href="#craft">Craft</a>
+      </nav>
+      
+      <a href="#how" class="btn-primary nav-btn">Join the challenge</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="chip">• The Cội Project • Ho Chi Minh City</span>
+          <h1>Nón Lá 2.0: tradition meets modern style</h1>
+          <p>Hoodie, baggy jeans, sneakers… and a conical hat. Yes, really. Show us how you wear it every day.</p>
+          <div class="hero-actions">
+            <a href="#how" class="btn-primary">Join the challenge &rarr;</a>
+            <a href="#looks" class="btn-outline">See the looks</a>
+          </div>
+          <div class="date-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Post your video by November 28
+          </div>
+        </div>
+        <div class="hero-image-wrapper">
+          <div class="hero-decor"></div>
+          <!-- ẢNH HERO -->
+          <img src="https://drive.google.com/thumbnail?id=1Ibx681DqATf3f0uASGC31Z6DCG8BewqL&sz=w1000" alt="A person wearing a red star t-shirt and a conical hat." class="hero-img">
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY SECTION -->
+    <section id="why" class="why">
+      <div class="container">
+        <div class="why-header">
+          <div>
+            <span class="label">Why this matters</span>
+            <h2>The hat isn't old. The box we keep it in is.</h2>
+          </div>
+          <div class="why-text">
+            <p>For a lot of us, the conical hat belongs in one place: a history lesson, a photo shoot, a rice field. So pairing it with a hoodie feels a little odd, like someone might judge. But the gap between “heritage” and “daily life” has real consequences.</p>
+          </div>
+        </div>
+        <div class="why-cards">
+          <div class="card-dark">
+            <span class="card-num">01</span>
+            <h3>Demand has dropped</h3>
+            <p>VOV World reported that modern demand for conical hats has fallen, making it harder for craft villages like Trí Lê to keep the craft going.</p>
+            <a href="#sources" class="source-link">Source: VOV World, 2016</a>
+          </div>
+          <div class="card-dark">
+            <span class="card-num">02</span>
+            <h3>Villages are already evolving</h3>
+            <p>Artisans are redesigning the hat as décor, gifts and tourism products. Our campaign brings those designs into everyday youth fashion.</p>
+            <a href="#sources" class="source-link">Source: Vietnam.vn, 2025</a>
+          </div>
+          <div class="card-dark">
+            <span class="card-num">03</span>
+            <h3>Tradition meets modern style</h3>
+            <p>Pair the hat with the hoodie, baggy jeans and sneakers you already wear, and let the hat do the talking.</p>
+          </div>
+        </div>
+        <div class="split-block">
+          <div class="split-img">
+             <!-- ẢNH NÓN LÁ 2.0 -->
+            <img src="https://drive.google.com/thumbnail?id=1yFR2iHgPGkI1_0au4BUU5yEzoTTpQF8p&sz=w1000" alt="Illustration of a conical hat with leaves.">
+          </div>
+          <div class="split-text">
+            <span class="label">Nón Lá 2.0</span>
+            <h3>Wear it your way</h3>
+            <p>The conical hat is not a costume. It is the finishing piece of an outfit you would wear anyway.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOOKS SECTION -->
+    <section id="looks" class="looks">
+      <div class="container">
+        <span class="label text-straw">Inspiration</span>
+        <h2 class="text-cream">Looks to steal</h2>
+        <p class="subline text-cream">Three ways to wear the hat with everyday style.</p>
+        <div class="looks-grid">
+          <figure class="look-item look-large">
+            <!-- ẢNH LOOK 1 -->
+            <img src="https://drive.google.com/thumbnail?id=1ASwm0ZvJbUl6f6XxvGI-HWfWZngcdRd_&sz=w1000" alt="Person in black outfit and conical hat.">
+            <figcaption>Streetwear, meet the mountains.</figcaption>
+          </figure>
+          <figure class="look-item look-small">
+            <!-- ẢNH LOOK 2 -->
+            <img src="https://drive.google.com/thumbnail?id=1uY-dA5OQ_DZ2zzfyC7H4oVrX3Zvtubmc&sz=w1000" alt="Woman in blue dress with conical hat.">
+            <figcaption>Lace top, cable car view.</figcaption>
+          </figure>
+          <figure class="look-item look-small">
+            <!-- ẢNH LOOK 3 -->
+            <img src="https://drive.google.com/thumbnail?id=1SFxvu1kpMBRuUjFSaqPrS4N1aKsG9E9n&sz=w1000" alt="Person in trench coat and conical hat.">
+            <figcaption>Long coat, round hat.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW SECTION -->
+    <section id="how" class="how">
+      <div class="container">
+        <span class="label">How to join</span>
+        <h2>Three steps. One hat.</h2>
+        <div class="how-grid">
+          <div class="step-card"><span class="step-num">01</span><h3>Film your look</h3><p>Record a short video of your everyday outfit with a conical hat.</p></div>
+          <div class="step-card"><span class="step-num">02</span><h3>Post it</h3><p>Share it on TikTok, Instagram Reels or Facebook Reels.</p></div>
+          <div class="step-card"><span class="step-num">03</span><h3>Tag it</h3><p>Use #TheCoiProject and #CoiDaily so we can find you.</p></div>
+        </div>
+        <div class="deadline-bar">
+          <span>Deadline: November 28</span>
+          <a href="#join" class="btn-primary">Submit your look</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRAFT SECTION -->
+    <section id="craft" class="craft">
+      <div class="container">
+        <span class="label text-straw">Behind the hat</span>
+        <h2 class="text-cream">Every hat comes from a village.</h2>
+        <div class="craft-grid">
+          <div class="craft-col">
+            <h3>Trí Lê</h3>
+            <p>Trí Lê is a village known for making traditional palm-leaf hats. VOV World featured it and reported that falling modern demand is a challenge for keeping the craft alive.</p>
+          </div>
+          <div class="craft-col">
+            <h3>Chuồng village</h3>
+            <p>In Chuồng village, artisan Tạ Thu Hương says the traditional techniques stay while the designs keep evolving, so the hat can also be décor, a gift, a performance prop or a tourism item.</p>
+          </div>
+        </div>
+        <div id="sources" class="sources">
+          <span class="label text-straw">Sources</span>
+          <ol>
+            <li><a href="https://vovworld.vn/sunday-show/tri-le-a-village-that-makes-traditional-palm-leaf-hats1406956.vov5" target="_blank">VOV World, "Tri Le – a village that makes traditional palm-leaf hats", Aug 1, 2016</a></li>
+            <li><a href="https://www.vietnam.vn/en/non-lang-chuong-dang-que-trong-tung-nep-la#1" target="_blank">Vietnam.vn, "Chuong Village conical hat: The essence of the countryside in every fold of the leaves", Dec 25, 2025</a></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN SECTION -->
+    <section id="join" class="join">
+      <div class="container">
+        <h2>Ready to show us your look?</h2>
+        <p>Post your video with #TheCoiProject and #CoiDaily, then send us the link before November 28.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfJXCr0Tc_U4X_G7upO6fpbtMEUzsFIZK-FsZsk0wPt5_YFvA/viewform" target="_blank" rel="noopener noreferrer" class="btn-primary btn-large">Submit your link &nearr;</a>
+        <p class="email-text">Prefer email? Write to <a href="mailto:thecoiproject@gmail.com">thecoiproject@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <span class="wordmark text-cream">The Cội Project</span>
+        <p>Nón Lá 2.0: tradition meets modern style.</p>
+      </div>
+      <div class="footer-col">
+        <a href="#why">Why</a>
+        <a href="#looks">Looks</a>
+        <a href="#how">How to join</a>
+        <a href="#craft">Craft</a>
+        <a href="#sources">Sources</a>
+      </div>
+      <div class="footer-col">
+        <span class="label text-straw">Contact</span>
+        <a href="mailto:thecoiproject@gmail.com">thecoiproject@gmail.com</a>
+        <p>#TheCoiProject #CoiDaily</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>This is a fictional campaign created for a class assignment.</p>
+      <p>© 2026 The Cội Project · Group 1 · Writing for Digital Media Skills</p>
+    </div>
+  </footer>
+
+  <!-- NHÚNG JS TRỰC TIẾP VÀO ĐÂY -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (hamburger) {
+        hamburger.addEventListener('click', () => {
+          navLinks.classList.toggle('is-active');
+        });
+      }
+
+      if (navLinks) {
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
